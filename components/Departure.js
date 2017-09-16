@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import NumberIcon from "./NumberIcon";
 
 export default function({
     to,
@@ -11,7 +12,7 @@ export default function({
     onPress,
 }) {
     return (
-        <View style={styles.container}>
+        <TouchableHighlight style={styles.container} onPress={onPress}>
             <View style={styles.row}>
                 {(occupation && (
                     <Icon
@@ -29,7 +30,7 @@ export default function({
                     />
                 )) || <View style={styles.placeholder} />}
                 <View style={styles.departureLeft}>
-                    <Text style={styles.number}>{number}</Text>
+                    <NumberIcon number={number}/>                 
                 </View>
                 <View style={styles.departureTo}>
                     <Text style={styles.to}>{to}</Text>
@@ -42,7 +43,7 @@ export default function({
                     </Text>
                 </View>
             </View>
-        </View>
+        </TouchableHighlight>
     );
 }
 
@@ -80,17 +81,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     category: {},
-    number: {
-        color: "white",
-        backgroundColor: "darkblue",
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderRadius: 4,
-        overflow: "hidden",
-        fontSize: 20,
-    },
     to: {
         fontSize: 15,
         paddingLeft: 10,

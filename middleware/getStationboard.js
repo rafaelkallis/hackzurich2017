@@ -7,7 +7,7 @@ export default () => ({ dispatch, getState }) => next => action => {
                 break;
             }
             fetch(
-                `http://transport.opendata.ch/v1/stationboard?id=${stationId}&limit=10&fields[]=stationboard/to&fields[]=stationboard/stop/departureTimestamp&fields[]=stationboard/category&fields[]=stationboard/number`,
+                `http://transport.opendata.ch/v1/stationboard?id=${stationId}&limit=10&fields[]=stationboard/to&fields[]=stationboard/stop/departureTimestamp&fields[]=stationboard/category&fields[]=stationboard/number&fields[]=stationboard/passList`,
             )
                 .then(response => response.json())
                 .then(({ stationboard }) => {

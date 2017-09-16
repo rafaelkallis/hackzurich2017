@@ -2,6 +2,7 @@ import React from "react";
 import Departure from "../components/Departure";
 import {
     StyleSheet,
+    Button,
     ScrollView,
     RefreshControl,
     TouchableHighlight,
@@ -37,23 +38,33 @@ const departureRowData = (setSelectedDeparture, departure) => {
         },
         leftSubView: (
             <View style={styles.warnView}>
-                {occupations.map((occupation, idx, parts) => {
-                    const partStyles = [styles.part];
-                    switch (occupation) {
-                        case 1:
-                            partStyles.push(styles.partWarnOccupied);
-                            break;
-                        case 2:
-                            partStyles.push(styles.partOccupied);
-                            break;
-                    }
+                <View style={styles.partsWrapper}>
+                    {occupations.map((occupation, idx, parts) => {
+                        const partStyles = [styles.part];
+                        switch (occupation) {
+                            case 1:
+                                partStyles.push(styles.partWarnOccupied);
+                                break;
+                            case 2:
+                                partStyles.push(styles.partOccupied);
+                                break;
+                        }
 
-                    if (idx === 0) partStyles.push(styles.partLeft);
-                    if (idx === parts.length - 1)
-                        partStyles.push(styles.partRight);
+                        if (idx === 0) partStyles.push(styles.partLeft);
+                        if (idx === parts.length - 1)
+                            partStyles.push(styles.partRight);
 
-                    return <View key={idx} style={partStyles} />;
-                })}
+                        return (
+                            <View key={idx} style={partStyles}>
+                                <View style={styles.partClass}>
+                                    <Text style={styles.partNumber}>
+                                        {Math.round(Math.random())}
+                                    </Text>
+                                </View>
+                            </View>
+                        );
+                    })}
+                </View>
             </View>
         ),
         rowView: (
@@ -115,28 +126,27 @@ export default connect((state, { stationId }) => {
             }
             return (
                 <View>
-                    {/*
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
-                            visible={!!this.state.selectedDeparture}
-                        >
-                            <TouchableHighlight
-                                style={styles.modal}
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={!!this.state.selectedDeparture}
+                        onRequestClose={this.hideModal}
+                    >
+                        <View style={styles.modal}>
+                            <Checkpoints
+                                checkpoints={
+                                    this.state.selectedDeparture &&
+                                    this.state.selectedDeparture.checkpoints
+                                }
+                            />
+                            <Button
                                 onPress={this.hideModal}
-                            >
-                                <View>
-                                    <Checkpoints
-                                        checkpoints={
-                                            this.state.selectedDeparture &&
-                                            this.state.selectedDeparture
-                                                .checkpoints
-                                        }
-                                    />
-                                </View>
-                            </TouchableHighlight>
-                        </Modal>
-                    */}
+                                style={styles.modalButton}
+                                title="Dismiss"
+                            />
+                        </View>
+                    </Modal>
+
                     <SwipeList
                         rowData={departures.map(departure =>
                             departureRowData(
@@ -160,19 +170,26 @@ const styles = StyleSheet.create({
     },
     warnView: {
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "white",
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",
     },
+    partsWrapper: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "90%",
+    },
     part: {
+        flex: 1,
+        alignItems: "center",
         width: 35,
         height: 20,
         backgroundColor: "white",
         borderWidth: 1,
         borderColor: "black",
+        marginTop: "-5%",
         marginRight: 5,
     },
     partLeft: {
@@ -189,8 +206,32 @@ const styles = StyleSheet.create({
         backgroundColor: "#ef9a9a",
     },
     modal: {
+        flex: 1,
         marginTop: 20,
-        backgroundColor: "blue",
-        height: "100%",
+    },
+    modalButton: {
+        flex: -1,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 16,
+        padding: 16,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: "#aaa",
+        color: "blue",
+    },
+    partClass: {
+        marginTop: 25,
+        paddingLeft: 4,
+        paddingRight: 4,
+        paddingTop: 0,
+        paddingBottom: 0,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: "#01579b",
+        backgroundColor: "#039be5",
+    },
+    partNumber: {
+        color: "white",
     },
 });
