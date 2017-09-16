@@ -26,7 +26,7 @@ export default function({ to, category, number, departureTime }) {
 const styles = StyleSheet.create({
     container: {
         borderBottomWidth: 1,
-        borderBottomColor: "grey",
+        borderBottomColor: "#ccc",
         marginBottom: 10,
         paddingBottom: 5,
     },

@@ -59,7 +59,7 @@ export default connect(state => {
                                                 payload: id,
                                             })}
                                         name={isFavourite ? "star" : "star-o"}
-                                        size={20}
+                                        size={30}
                                         color="gold"
                                     />
                                 )}
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         padding: 12,
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",
+        height: 60,
     },
     headerText: {
         fontSize: 16,
