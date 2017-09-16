@@ -11,11 +11,7 @@ export default function({
     onPress,
 }) {
     return (
-        <TouchableHighlight
-            style={styles.container}
-            onPress={onPress}
-            underlayColor="#ccc"
-        >
+        <View style={styles.container}>
             <View style={styles.row}>
                 {(occupation && (
                     <Icon
@@ -31,8 +27,7 @@ export default function({
                             )
                         }
                     />
-                )) ||
-                    null}
+                )) || <View style={styles.placeholder} />}
                 <View style={styles.departureLeft}>
                     <Text style={styles.number}>{number}</Text>
                 </View>
@@ -47,7 +42,7 @@ export default function({
                     </Text>
                 </View>
             </View>
-        </TouchableHighlight>
+        </View>
     );
 }
 
@@ -58,6 +53,7 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 12,
+        height: 80,
     },
     row: {
         flex: 1,
@@ -103,5 +99,8 @@ const styles = StyleSheet.create({
     departureTime: {
         fontSize: 30,
         marginRight: 20,
+    },
+    placeholder: {
+        marginLeft: 20,
     },
 });
