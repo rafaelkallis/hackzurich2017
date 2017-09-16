@@ -1,14 +1,12 @@
 import React from "react";
-import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import departureReducer from "./departures/reducer";
 import Departures from "./departures/Departures";
+import store from "./store";
 
-const rootReducer = combineReducers({
-    departures: departureReducer,
-});
+// Testing
+import { getCloseDepartures } from "./departures/actions";
 
-const store = createStore(rootReducer);
+store.dispatch(getCloseDepartures(47.3901869, 8.5136578)).then(console.log);
 
 export default class App extends React.Component {
     render() {
