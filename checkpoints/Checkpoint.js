@@ -9,11 +9,8 @@ export default connect(({ stations }, { stationId }) => ({
         componentDidMount() {
             if (!this.props.station)
                 this.props.dispatch({
-                    type: "GET_STATIONS_REQUESTED",
-                    payload: {
-                        stationId: parseInt(this.props.stationId),
-                        onlyAdd: true,
-                    },
+                    type: "GET_STATION_REQUESTED",
+                    payload: parseInt(this.props.stationId),
                 });
         }
 

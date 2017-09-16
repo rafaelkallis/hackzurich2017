@@ -11,6 +11,30 @@ export default (state = initState, action) => {
                 ...state,
                 pending: true,
             };
+        case "GET_STATION_FULFILLED":
+            const stationArray = action.payload
+                .map(station => ({
+                    id: station.id,
+                    name: station.name,
+                    coordinate: {
+                        latitude: station.coordinate.x,
+                        longitude: station.coordinate.y,
+                    },
+                    distance: station.distance,
+                }))
+                .filter(x => x.id !== null)
+                .reduce(
+                    (acc, station) => ({ ...acc, [station.id]: station }),
+                    {},
+                );
+            return {
+                ...state,
+                pending: false,
+                allStations: {
+                    ...state.allStations,
+                    ...stationArray,
+                },
+            };
         case "GET_STATIONS_FULFILLED":
             const stations = action.payload
                 .map(station => ({
@@ -30,7 +54,7 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 allStations: { ...state.allStations, ...stations },
-                data: action.onlyAdd ? state.data : stations,
+                data: stations,
                 pending: false,
             };
         default:
