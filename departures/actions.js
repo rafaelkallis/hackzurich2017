@@ -43,24 +43,24 @@ export const getCloseDepartures = () => async (dispatch, getState) => {
             x: 47.3901869,
             y: 8.5136578,
         });
-        const stationboardResponses = await Promise.all(
-            stations.map(({ name, id }) =>
-                fetchApi("stationboard", {
+
+        const stationBoards = await Promise.all(
+            stations.slice(0, 3).map(async ({ id, name }) => {
+                const { stationboard } = await fetchApi("stationboard", {
                     id,
                     station: name,
-                }),
-            ),
+                });
+
+                return stationboard;
+            }),
         );
-        const stationBoards = stationboardResponses.map(response => {
-            const stationboard = response.stationboard;
-            stationboard.from = response.station;
-            return stationboard;
-        });
-        const connection = stationBoards.reduce(
+
+        const journeys = stationBoards.reduce(
             (conns, loc) => conns.concat(loc),
             [],
         );
-        dispatch(getCloseDeparturesFulfilled(connection));
+
+        dispatch(getCloseDeparturesFulfilled(journeys));
     } catch (error) {
         dispatch(getCloseDeparturesError(error));
     }

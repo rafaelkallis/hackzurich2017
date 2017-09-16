@@ -7,7 +7,7 @@ export default function({ from, to, category, number, departureTime }) {
             <Text>
                 {category} {number}
             </Text>
-            <Text>{from}</Text>
+            <Text>{from.name}</Text>
             <Text>{to}</Text>
             <Text>{departureTime}</Text>
         </View>

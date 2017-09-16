@@ -36,7 +36,7 @@ export default connect(state => ({
                     {departures.map(
                         ({ from, to, category, number, departureTime }) => (
                             <Departure
-                                key={`${from}_${category}_${number}_${departureTime}`}
+                                key={`${from.name}_${category}_${number}_${departureTime}`}
                                 {...{
                                     from,
                                     to,

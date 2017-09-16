@@ -20,8 +20,9 @@ export default (state = initialState, action) => {
             return Object.assign({}, state, { pending: true });
         case GET_CLOSE_DEPARTURES_FULFILLED:
             const journeyData = action.payload;
+
             const data = journeyData.map(journey => ({
-                from: journey.from,
+                from: journey.stop.station,
                 to: journey.to,
                 category: journey.category,
                 number: journey.number,
