@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
                 from: journey.from,
                 to: journey.to,
                 category: journey.category,
-                number: journey.category,
+                number: journey.number,
                 departureTime: journey.stop.departure,
                 checkpoints: journey.passList,
             }));
