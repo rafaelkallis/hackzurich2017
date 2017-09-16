@@ -29,19 +29,28 @@ const getCloseDeparturesError = error => ({
     error: true,
 });
 
-export const getCloseDepartures = (lat, lon) => (dispatch, getState) => {
+const getPosition = () => {
+    return new Promise((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject),
+    );
+};
+
+export const getCloseDepartures = () => (dispatch, getState) => {
     dispatch(getCloseDeparturesRequested());
 
-    return fetchApi("locations", {
-        x: lat,
-        y: lon,
-    })
-        .then(locations =>
+    getPosition()
+        .then(({ coords: { latitude, longitude } }) =>
+            fetchApi("locations", {
+                x: 47.3901869,
+                y: 8.5136578,
+            }),
+        )
+        .then(({ stations }) =>
             Promise.all(
-                locations.stations.map(location =>
+                stations.map(({ name, id }) =>
                     fetchApi("stationboard", {
-                        station: location.name,
-                        id: location.id,
+                        id,
+                        station: name,
                     }),
                 ),
             ),
