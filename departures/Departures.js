@@ -13,26 +13,44 @@ import { getCloseDepartures } from "./actions";
 export default connect(state => ({
     pending: state.departures.pending,
     departures: state.departures.data,
-}))(({ pending, departures, dispatch }) => (
-    <ScrollView
-        refreshControl={
-            <RefreshControl
-                refreshing={pending}
-                onRefresh={() => {
-                    dispatch(getCloseDepartures());
-                }}
-            />
+}))(
+    class extends React.Component {
+        componentDidMount() {
+            this.props.dispatch(getCloseDepartures());
         }
-        style={styles.container}
-    >
-        {departures.map(({ from, to, category, number, departureTime }) => (
-            <Departure
-                key={`${category}_${number}_${departureTime}`}
-                {...{ from, to, category, number, departureTime }}
-            />
-        ))}
-    </ScrollView>
-));
+        render() {
+            const { pending, departures, dispatch } = this.props;
+            return (
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={pending}
+                            onRefresh={() => {
+                                dispatch(getCloseDepartures());
+                            }}
+                        />
+                    }
+                    style={styles.container}
+                >
+                    {departures.map(
+                        ({ from, to, category, number, departureTime }) => (
+                            <Departure
+                                key={`${from}_${category}_${number}_${departureTime}`}
+                                {...{
+                                    from,
+                                    to,
+                                    category,
+                                    number,
+                                    departureTime,
+                                }}
+                            />
+                        ),
+                    )}
+                </ScrollView>
+            );
+        }
+    },
+);
 
 const styles = StyleSheet.create({
     container: {

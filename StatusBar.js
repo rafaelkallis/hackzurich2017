@@ -5,7 +5,7 @@ export default () => <View style={styles.container} />;
 
 const styles = StyleSheet.create({
     container: {
-        height: Platform.OS === "ios" ? 20 : 0,
+        height: 20,
         backgroundColor: "#fff",
     },
 });

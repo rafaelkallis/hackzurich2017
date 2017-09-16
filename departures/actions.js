@@ -35,36 +35,33 @@ const getPosition = () => {
     );
 };
 
-export const getCloseDepartures = () => (dispatch, getState) => {
+export const getCloseDepartures = () => async (dispatch, getState) => {
     dispatch(getCloseDeparturesRequested());
-
-    getPosition()
-        .then(({ coords: { latitude, longitude } }) =>
-            fetchApi("locations", {
-                x: 47.3901869,
-                y: 8.5136578,
-            }),
-        )
-        .then(({ stations }) =>
-            Promise.all(
-                stations.map(({ name, id }) =>
-                    fetchApi("stationboard", {
-                        id,
-                        station: name,
-                    }),
-                ),
+    try {
+        const { coords: { latitude, longitude } } = await getPosition();
+        const { stations } = await fetchApi("locations", {
+            x: 47.3901869,
+            y: 8.5136578,
+        });
+        const stationboardResponses = await Promise.all(
+            stations.map(({ name, id }) =>
+                fetchApi("stationboard", {
+                    id,
+                    station: name,
+                }),
             ),
-        )
-        .then(stationboardResponses =>
-            stationboardResponses.map(response => {
-                const stationboard = response.stationboard;
-                stationboard.from = response.station;
-                return stationboard;
-            }),
-        )
-        .then(stationboards =>
-            stationboards.reduce((conns, loc) => conns.concat(loc), []),
-        )
-        .then(connections => getCloseDeparturesFulfilled(connections))
-        .catch(error => dispatch(getCloseDeparturesError(error)));
+        );
+        const stationBoards = stationboardResponses.map(response => {
+            const stationboard = response.stationboard;
+            stationboard.from = response.station;
+            return stationboard;
+        });
+        const connection = stationBoards.reduce(
+            (conns, loc) => conns.concat(loc),
+            [],
+        );
+        dispatch(getCloseDeparturesFulfilled(connection));
+    } catch (error) {
+        dispatch(getCloseDeparturesError(error));
+    }
 };

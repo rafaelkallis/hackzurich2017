@@ -9,30 +9,13 @@ import {
 */
 
 const initialState = {
-    data: [
-        /* 
-            {
-                from,
-                to,
-                category,
-                number,
-                departureTime
-            }
-        */
-        {
-            from: "From",
-            to: "To",
-            category: "Category",
-            number: "Number",
-            departureTime: "DepartureTime",
-        },
-    ],
+    data: [],
     pending: false,
     error: null,
 };
 
 export default (state = initialState, action) => {
-    switch (action) {
+    switch (action.type) {
         case GET_CLOSE_DEPARTURES_REQUESTED:
             return Object.assign({}, state, { pending: true });
         case GET_CLOSE_DEPARTURES_FULFILLED:
