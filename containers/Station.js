@@ -12,21 +12,6 @@ import Checkpoints from "../checkpoints/Checkpoints";
 import SwipeList from "react-native-smooth-swipe-list";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const toggleFavourite = async id => {
-    let favourites = [];
-    let isFavourite = false;
-    const favouritesJSON = await AsyncStorage.getItem("favourites");
-
-    if (favouritesJSON) favourites = JSON.parse(favouritesJSON);
-
-    if (!(isFavourite = favourites.includes(id))) favourites.push(id);
-    else favourites = favourites.filter(fav => fav !== id);
-
-    await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
-
-    return isFavourite;
-};
-
 const generateRandomParts = () => {
     const numParts = Math.floor(Math.random() * 4) + 2;
 
@@ -69,17 +54,6 @@ const departureRowData = ({
             })}
         </View>
     ),
-    rightSubView: (
-        <View style={styles.rightSubView}>
-            <Text>
-                <Icon
-                    name={favourite ? "star" : "star-o"}
-                    size={20}
-                    color="gold"
-                />
-            </Text>
-        </View>
-    ),
     rowView: (
         <Departure
             key={`${to}_${category}_${number}_${departureTimestamp}`}
@@ -112,23 +86,7 @@ export default connect((state, { stationId }) => {
             if (!ready) {
                 return null;
             }
-            return (
-                <View>
-                    <Text>{name}</Text>
-                    <SwipeList rowData={departures.map(departureRowData)} />
-                    {/* {departures.map(
-                        ({ to, category, number, departureTimestamp }) => (
-                            <Departure
-                                key={`${to}_${category}_${number}_${departureTimestamp}`}
-                                to={to}
-                                category={category}
-                                number={number}
-                                departureTime={departureTimestamp}
-                            />
-                        ),
-                    )} */}
-                </View>
-            );
+            return <SwipeList rowData={departures.map(departureRowData)} />;
         }
     },
 );
@@ -167,13 +125,5 @@ const styles = StyleSheet.create({
     },
     partOccupied: {
         backgroundColor: "#ef9a9a",
-    },
-    rightSubView: {
-        flex: -1,
-        alignItems: "center",
-        justifyContent: "center",
-        width: 80,
-        height: "100%",
-        backgroundColor: "steelblue",
     },
 });
