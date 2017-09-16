@@ -3,6 +3,7 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import departureReducer from "./departures/reducer";
 import Departures from "./departures/Departures";
+import Departure from "./departure";
 
 const rootReducer = combineReducers({
     departures: departureReducer,
@@ -14,7 +15,7 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Departures />
+                <Departure from="Hello"/>
             </Provider>
         );
     }
