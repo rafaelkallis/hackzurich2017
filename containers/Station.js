@@ -2,6 +2,7 @@ import React from "react";
 import Departure from "../components/Departure";
 import {
     StyleSheet,
+    Button,
     ScrollView,
     RefreshControl,
     TouchableHighlight,
@@ -108,28 +109,26 @@ export default connect((state, { stationId }) => {
             }
             return (
                 <View>
-                    {/*
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
-                            visible={!!this.state.selectedDeparture}
-                        >
-                            <TouchableHighlight
-                                style={styles.modal}
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={!!this.state.selectedDeparture}
+                    >
+                        <View style={styles.modal}>
+                            <Checkpoints
+                                checkpoints={
+                                    this.state.selectedDeparture &&
+                                    this.state.selectedDeparture.checkpoints
+                                }
+                            />
+                            <Button
                                 onPress={this.hideModal}
-                            >
-                                <View>
-                                    <Checkpoints
-                                        checkpoints={
-                                            this.state.selectedDeparture &&
-                                            this.state.selectedDeparture
-                                                .checkpoints
-                                        }
-                                    />
-                                </View>
-                            </TouchableHighlight>
-                        </Modal>
-                    */}
+                                style={styles.modalButton}
+                                title="Dismiss"
+                            />
+                        </View>
+                    </Modal>
+
                     <SwipeList
                         rowData={departures.map(departure =>
                             departureRowData(
@@ -182,8 +181,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#ef9a9a",
     },
     modal: {
+        flex: 1,
         marginTop: 20,
-        backgroundColor: "blue",
-        height: "100%",
+    },
+    modalButton: {
+        flex: -1,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 16,
+        padding: 16,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: "#aaa",
+        color: "blue",
     },
 });

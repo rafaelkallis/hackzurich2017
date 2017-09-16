@@ -4,35 +4,22 @@ import Checkpoint from "./Checkpoint";
 import { connect } from "react-redux";
 
 export default ({ checkpoints }) => (
-    <ScrollView>
+    <ScrollView style={styles.container}>
         {(checkpoints &&
-            checkpoints.map(checkpoint => (
+            checkpoints.map((checkpoint, idx) => (
                 <Checkpoint
                     key={`${checkpoint.station.id}_${checkpoint.arrival}`}
-                    {...checkpoint}
+                    index={idx}
+                    numPoints={checkpoints.length}
+                    stationId={checkpoint.station.id}
                 />
             ))) ||
             null}
     </ScrollView>
 );
 
-/*
-<Checkpoints
-    checkpoints={[
-        {
-            station: {
-                name: "Zürich",
-                type: "Bus",
-            },
-            arrival: Date.now(),
-        },
-        {
-            station: {
-                name: "Bern",
-                type: "Zug",
-            },
-            arrival: Date.now(),
-        },
-    ]}
-/>;
-*/
+const styles = StyleSheet.create({
+    container: {
+        height: "100%",
+    },
+});
