@@ -38,23 +38,33 @@ const departureRowData = (setSelectedDeparture, departure) => {
         },
         leftSubView: (
             <View style={styles.warnView}>
-                {occupations.map((occupation, idx, parts) => {
-                    const partStyles = [styles.part];
-                    switch (occupation) {
-                        case 1:
-                            partStyles.push(styles.partWarnOccupied);
-                            break;
-                        case 2:
-                            partStyles.push(styles.partOccupied);
-                            break;
-                    }
+                <View style={styles.partsWrapper}>
+                    {occupations.map((occupation, idx, parts) => {
+                        const partStyles = [styles.part];
+                        switch (occupation) {
+                            case 1:
+                                partStyles.push(styles.partWarnOccupied);
+                                break;
+                            case 2:
+                                partStyles.push(styles.partOccupied);
+                                break;
+                        }
 
-                    if (idx === 0) partStyles.push(styles.partLeft);
-                    if (idx === parts.length - 1)
-                        partStyles.push(styles.partRight);
+                        if (idx === 0) partStyles.push(styles.partLeft);
+                        if (idx === parts.length - 1)
+                            partStyles.push(styles.partRight);
 
-                    return <View key={idx} style={partStyles} />;
-                })}
+                        return (
+                            <View key={idx} style={partStyles}>
+                                <View style={styles.partClass}>
+                                    <Text style={styles.partNumber}>
+                                        {Math.round(Math.random())}
+                                    </Text>
+                                </View>
+                            </View>
+                        );
+                    })}
+                </View>
             </View>
         ),
         rowView: (
@@ -152,19 +162,26 @@ const styles = StyleSheet.create({
     },
     warnView: {
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "white",
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",
     },
+    partsWrapper: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "90%",
+    },
     part: {
+        flex: 1,
+        alignItems: "center",
         width: 35,
         height: 20,
         backgroundColor: "white",
         borderWidth: 1,
         borderColor: "black",
+        marginTop: "-5%",
         marginRight: 5,
     },
     partLeft: {
@@ -194,5 +211,19 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderColor: "#aaa",
         color: "blue",
+    },
+    partClass: {
+        marginTop: 25,
+        paddingLeft: 4,
+        paddingRight: 4,
+        paddingTop: 0,
+        paddingBottom: 0,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: "#01579b",
+        backgroundColor: "#039be5",
+    },
+    partNumber: {
+        color: "white",
     },
 });
