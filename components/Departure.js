@@ -30,16 +30,21 @@ export default function({
                     />
                 )) || <View style={styles.placeholder} />}
                 <View style={styles.departureLeft}>
-                    <NumberIcon number={number}/>                 
+                    <NumberIcon number={number} />
                 </View>
                 <View style={styles.departureTo}>
                     <Text style={styles.to}>{to}</Text>
                 </View>
                 <View style={styles.departureRight}>
                     <Text style={styles.departureTime}>
-                        {new Date(
-                            new Date(departureTime * 1000) - new Date(),
-                        ).getMinutes()}'
+                        {Math.max(
+                            0,
+                            Math.floor(
+                                (departureTime -
+                                    Math.floor(Date.now() / 1000)) /
+                                    60,
+                            ),
+                        )}'
                     </Text>
                 </View>
             </View>
