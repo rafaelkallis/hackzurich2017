@@ -33,25 +33,32 @@ export default connect(state => ({
                     }
                     style={styles.container}
                 >
-                    {departures.map(
-                        ({ from, to, category, number, departureTime }) => (
-                            <Departure
-                                key={`${from.name}_${category}_${number}_${departureTime}`}
-                                {...{
-                                    from,
-                                    to,
-                                    category,
-                                    number,
-                                    departureTime,
-                                }}
-                            />
-                        ),
-                    )}
+                    <Departure
+                          category={"Category"}
+                          to={"Somewhere"}
+                          number={"Number"}
+                          departureTime={"TIME"}
+                    />
                 </ScrollView>
             );
         }
     },
 );
+
+    // {departures.map(
+    //     ({ from, to, category, number, departureTime }) => (
+    //         <Departure
+    //             key={`${from.name}_${category}_${number}_${departureTime}`}
+    //             {...{
+    //                 from,
+    //                 to,
+    //                 category,
+    //                 number,
+    //                 departureTime,
+    //             }}
+    //         />
+    //     ),
+    // )}
 
 const styles = StyleSheet.create({
     container: {
