@@ -65,9 +65,7 @@ export default connect(state => {
                             </View>
                         )}
                         renderContent={({ id }) => (
-                            <View>
-                                <Station key={id} stationId={id} />
-                            </View>
+                            <Station key={id} stationId={id} />
                         )}
                         easing="easeInOutCubic"
                         underlayColor="#ddd"

@@ -8,12 +8,17 @@ const toggleFavourite = async id => {
 
     if (favouritesJSON) favourites = JSON.parse(favouritesJSON);
 
-    if (!favourites.includes(id)) favourites.push(id);
-    else favourites = favourites.filter(fav => fav !== id);
+    if (!favourites.includes(id)) {
+        favourites.push(id);
+        isFavourite = true;
+    } else {
+        favourites = favourites.filter(fav => fav != id);
+        isFavourite = false;
+    }
 
     await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
 
-    return favourites.includes(id);
+    return isFavourite;
 };
 
 export default () => ({ dispatch, getState }) => next => action => {
