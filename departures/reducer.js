@@ -10,7 +10,15 @@ import {
 
 const initialState = {
     data: [
-        /* Connection objects */
+        /* 
+            {
+                from,
+                to,
+                category,
+                number,
+                departureTime
+            }
+        */
     ],
     pending: false,
     error: null,
@@ -21,8 +29,17 @@ export default (state = initialState, action) => {
         case GET_CLOSE_DEPARTURES_REQUESTED:
             return Object.assign({}, state, { pending: true });
         case GET_CLOSE_DEPARTURES_FULFILLED:
+            const journeyData = action.payload;
+            const data = journeyData.map(journey => ({
+                from: journey.from,
+                to: journey.to,
+                category: journey.category,
+                number: journey.category,
+                departureTime: journey.stop.departure,
+            }));
+
             return Object.assign({}, state, {
-                data: action.payload,
+                data,
                 pending: false,
             });
         case GET_CLOSE_DEPARTURES_ERROR:
