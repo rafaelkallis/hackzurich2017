@@ -123,7 +123,7 @@ export default connect((state, { stationId }) => {
                         animationType="slide"
                         transparent={false}
                         visible={!!this.state.selectedDeparture}
-                        onRequestClose={this.hideModal}
+                        onRequestClose={() => null}
                     >
                         <View style={styles.modal}>
                             <Checkpoints
