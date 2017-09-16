@@ -28,8 +28,7 @@ const generateRandomParts = () => {
 };
 
 const departureRowData = (setSelectedDeparture, departure) => {
-    const occupations = generateRandomParts();
-    const { to, category, number, departureTimestamp } = departure;
+    const { to, category, number, departureTimestamp, occupations } = departure;
 
     return {
         id: `${category}_${number}_${departureTimestamp}`,

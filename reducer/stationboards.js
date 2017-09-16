@@ -1,3 +1,16 @@
+const generateRandomParts = () => {
+    const numParts = Math.floor(Math.random() * 6) + 4;
+
+    const items = [];
+    for (var i = 0; i < numParts; i++) {
+        const exp = Math.random();
+        // Occupationlevels 1-3
+        items.push(Math.floor(exp * exp * 3));
+    }
+
+    return items;
+};
+
 const initState = {};
 
 export default (state = initState, action) => {
@@ -30,6 +43,7 @@ export default (state = initState, action) => {
                             to,
                             departureTimestamp,
                             checkpoints,
+                            occupations: generateRandomParts(),
                         }),
                     ),
                     pending: false,
