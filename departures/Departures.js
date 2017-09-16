@@ -28,6 +28,17 @@ const toggleFavourite = async id => {
     return isFavourite;
 };
 
+const generateRandomParts = () => {
+    const numParts = Math.floor(Math.random() * 4) + 2;
+
+    const items = [];
+    for (var i = 0; i < numParts; i++)
+        // Occupationlevels 1-3
+        items.push(Math.floor(Math.random() * 3));
+
+    return items;
+};
+
 const departureRowData = ({
     favourite,
     from,
@@ -37,6 +48,29 @@ const departureRowData = ({
     departureTime,
 }) => ({
     id: `${from.name}_${category}_${number}_${departureTime}`,
+    leftSubViewOptions: {
+        fullWidth: true,
+    },
+    leftSubView: (
+        <View style={styles.warnView}>
+            {generateRandomParts().map((occupation, idx, parts) => {
+                const partStyles = [styles.part];
+                switch (occupation) {
+                    case 1:
+                        partStyles.push(styles.partWarnOccupied);
+                        break;
+                    case 2:
+                        partStyles.push(styles.partOccupied);
+                        break;
+                }
+
+                if (idx === 0) partStyles.push(styles.partLeft);
+                if (idx === parts.length - 1) partStyles.push(styles.partRight);
+
+                return <View key={idx} style={partStyles} />;
+            })}
+        </View>
+    ),
     rightSubView: (
         <View style={styles.rightSubView}>
             <Text>
@@ -101,6 +135,34 @@ const styles = StyleSheet.create({
     },
     lightgold: {
         backgroundColor: "lightgoldenrodyellow",
+    },
+    warnView: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "lightgoldenrodyellow",
+    },
+    part: {
+        width: 60,
+        height: 20,
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "black",
+        marginRight: 5,
+    },
+    partLeft: {
+        borderTopLeftRadius: 4,
+    },
+    partRight: {
+        borderTopRightRadius: 4,
+        marginRight: 0,
+    },
+    partWarnOccupied: {
+        backgroundColor: "#ffcc80",
+    },
+    partOccupied: {
+        backgroundColor: "#ef9a9a",
     },
     rightSubView: {
         flex: -1,
