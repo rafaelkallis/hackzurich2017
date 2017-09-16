@@ -2,18 +2,19 @@ import React from "react";
 import Departure from "../components/Departure";
 import {
     StyleSheet,
-    Text,
     ScrollView,
     RefreshControl,
+    TouchableHighlight,
     View,
+    Modal,
+    Text,
 } from "react-native";
 import { connect } from "react-redux";
 import Checkpoints from "../checkpoints/Checkpoints";
 import SwipeList from "react-native-smooth-swipe-list";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const generateRandomParts = () => {
-    const numParts = Math.floor(Math.random() * 4) + 2;
+    const numParts = Math.floor(Math.random() * 6) + 4;
 
     const items = [];
     for (var i = 0; i < numParts; i++)
@@ -23,48 +24,53 @@ const generateRandomParts = () => {
     return items;
 };
 
-const departureRowData = ({
-    favourite,
-    to,
-    category,
-    number,
-    departureTimestamp,
-}) => ({
-    id: `${category}_${number}_${departureTimestamp}`,
-    leftSubViewOptions: {
-        fullWidth: true,
-    },
-    leftSubView: (
-        <View style={styles.warnView}>
-            {generateRandomParts().map((occupation, idx, parts) => {
-                const partStyles = [styles.part];
-                switch (occupation) {
-                    case 1:
-                        partStyles.push(styles.partWarnOccupied);
-                        break;
-                    case 2:
-                        partStyles.push(styles.partOccupied);
-                        break;
-                }
+const departureRowData = (setSelectedDeparture, departure) => {
+    const occupations = generateRandomParts();
+    const { favourite, to, category, number, departureTimestamp } = departure;
 
-                if (idx === 0) partStyles.push(styles.partLeft);
-                if (idx === parts.length - 1) partStyles.push(styles.partRight);
+    return {
+        id: `${category}_${number}_${departureTimestamp}`,
+        leftSubViewOptions: {
+            fullWidth: true,
+        },
+        leftSubView: (
+            <View style={styles.warnView}>
+                {occupations.map((occupation, idx, parts) => {
+                    const partStyles = [styles.part];
+                    switch (occupation) {
+                        case 1:
+                            partStyles.push(styles.partWarnOccupied);
+                            break;
+                        case 2:
+                            partStyles.push(styles.partOccupied);
+                            break;
+                    }
 
-                return <View key={idx} style={partStyles} />;
-            })}
-        </View>
-    ),
-    rowView: (
-        <Departure
-            key={`${to}_${category}_${number}_${departureTimestamp}`}
-            to={to}
-            category={category}
-            number={number}
-            departureTime={departureTimestamp}
-        />
-    ),
-    style: favourite ? styles.lightgold : styles.white,
-});
+                    if (idx === 0) partStyles.push(styles.partLeft);
+                    if (idx === parts.length - 1)
+                        partStyles.push(styles.partRight);
+
+                    return <View key={idx} style={partStyles} />;
+                })}
+            </View>
+        ),
+        rowView: (
+            <Departure
+                key={`${to}_${category}_${number}_${departureTimestamp}`}
+                to={to}
+                category={category}
+                number={number}
+                departureTime={departureTimestamp}
+                onPress={() => setSelectedDeparture(departure)}
+                occupation={Math.round(
+                    occupations.reduce((a, b) => a + b, 0) /
+                        (occupations.length || 1),
+                )}
+            />
+        ),
+        style: favourite ? styles.lightgold : styles.white,
+    };
+};
 
 export default connect((state, { stationId }) => {
     const station = state.stations.data[stationId];
@@ -81,12 +87,57 @@ export default connect((state, { stationId }) => {
     };
 })(
     class extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                selectedDeparture: null,
+            };
+        }
+        setSelectedDeparture = departure => {
+            this.setState({ selectedDeparture: departure });
+        };
+        hideModal = () => {
+            this.setState({ selectedDeparture: null });
+        };
         render() {
             const { ready, name, pending, departures } = this.props;
             if (!ready) {
                 return null;
             }
-            return <SwipeList rowData={departures.map(departureRowData)} />;
+            return (
+                <View>
+                    {/*
+                        <Modal
+                            animationType="slide"
+                            transparent={false}
+                            visible={!!this.state.selectedDeparture}
+                        >
+                            <TouchableHighlight
+                                style={styles.modal}
+                                onPress={this.hideModal}
+                            >
+                                <View>
+                                    <Checkpoints
+                                        checkpoints={
+                                            this.state.selectedDeparture &&
+                                            this.state.selectedDeparture
+                                                .checkpoints
+                                        }
+                                    />
+                                </View>
+                            </TouchableHighlight>
+                        </Modal>
+                    */}
+                    <SwipeList
+                        rowData={departures.map(departure =>
+                            departureRowData(
+                                this.setSelectedDeparture,
+                                departure,
+                            ),
+                        )}
+                    />
+                </View>
+            );
         }
     },
 );
@@ -103,10 +154,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "lightgoldenrodyellow",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc",
     },
     part: {
-        width: 60,
+        width: 35,
         height: 20,
         backgroundColor: "white",
         borderWidth: 1,
@@ -114,10 +167,10 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     partLeft: {
-        borderTopLeftRadius: 4,
+        borderTopLeftRadius: 8,
     },
     partRight: {
-        borderTopRightRadius: 4,
+        borderTopRightRadius: 8,
         marginRight: 0,
     },
     partWarnOccupied: {
@@ -125,5 +178,10 @@ const styles = StyleSheet.create({
     },
     partOccupied: {
         backgroundColor: "#ef9a9a",
+    },
+    modal: {
+        marginTop: 20,
+        backgroundColor: "blue",
+        height: "100%",
     },
 });

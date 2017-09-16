@@ -8,7 +8,6 @@ import {
     ActivityIndicator,
 } from "react-native";
 import { connect } from "react-redux";
-import Checkpoints from "../checkpoints/Checkpoints";
 import { stationsByDistance } from "../selectors";
 import Station from "./Station";
 import Accordion from "react-native-collapsible/Accordion";

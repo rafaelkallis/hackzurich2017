@@ -1,12 +1,43 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function({ to, category, number, departureTime }) {
+export default function({
+    to,
+    category,
+    number,
+    departureTime,
+    occupation,
+    onPress,
+}) {
     return (
-        <View style={styles.container}>
+        <TouchableHighlight
+            style={styles.container}
+            onPress={onPress}
+            underlayColor="#ccc"
+        >
             <View style={styles.row}>
+                {(occupation && (
+                    <Icon
+                        name="warning"
+                        size={20}
+                        color={
+                            occupation === 3 ? (
+                                "red"
+                            ) : occupation === 2 ? (
+                                "orange"
+                            ) : (
+                                "white"
+                            )
+                        }
+                    />
+                )) ||
+                    null}
                 <View style={styles.departureLeft}>
                     <Text style={styles.number}>{number}</Text>
+                </View>
+                <View style={styles.departureTo}>
+                    <Text style={styles.to}>{to}</Text>
                 </View>
                 <View style={styles.departureRight}>
                     <Text style={styles.departureTime}>
@@ -16,23 +47,22 @@ export default function({ to, category, number, departureTime }) {
                     </Text>
                 </View>
             </View>
-            <View style={styles.row}>
-                <Text style={styles.to}>{to}</Text>
-            </View>
-        </View>
+        </TouchableHighlight>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         borderBottomWidth: 1,
-        borderBottomColor: "grey",
-        marginBottom: 10,
+        borderBottomColor: "#ccc",
+        paddingTop: 5,
         paddingBottom: 5,
+        paddingLeft: 12,
     },
     row: {
         flex: 1,
         flexDirection: "row",
+        alignItems: "center",
     },
     departure: {
         marginTop: 4,
@@ -41,13 +71,17 @@ const styles = StyleSheet.create({
         height: 100,
     },
     departureLeft: {
-        flex: 1,
+        flex: -1,
         padding: 10,
         alignItems: "flex-start",
     },
     departureRight: {
-        flex: 1,
+        flex: -1,
         alignItems: "flex-end",
+    },
+    departureTo: {
+        flex: 1,
+        justifyContent: "center",
     },
     category: {},
     number: {
@@ -68,7 +102,6 @@ const styles = StyleSheet.create({
     },
     departureTime: {
         fontSize: 30,
-        marginTop: 15,
         marginRight: 20,
     },
 });
