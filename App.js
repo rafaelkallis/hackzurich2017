@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import Stations from "./containers/Stations";
 import { View } from "react-native";
 import store from "./store";
-import StatusBar from "./StatusBar";
+import StatusBar from "./components/StatusBar";
 
 export default class App extends React.Component {
     render() {
