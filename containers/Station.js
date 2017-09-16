@@ -95,6 +95,13 @@ export default connect((state, { stationId }) => {
                 selectedDeparture: null,
             };
         }
+        componentDidMount() {
+            const { dispatch, stationId } = this.props;
+            dispatch({
+                type: "GET_STATIONBOARD_REQUESTED",
+                payload: { stationId },
+            });
+        }
         setSelectedDeparture = departure => {
             this.setState({ selectedDeparture: departure });
         };

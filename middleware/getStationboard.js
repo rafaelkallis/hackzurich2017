@@ -2,6 +2,10 @@ export default () => ({ dispatch, getState }) => next => action => {
     switch (action.type) {
         case "GET_STATIONBOARD_REQUESTED":
             const { stationId } = action.payload;
+            const { stationboards } = getState();
+            if (stationboards[stationId] && stationboards[stationId].pending) {
+                break;
+            }
             fetch(
                 `http://transport.opendata.ch/v1/stationboard?id=${stationId}&limit=10&fields[]=stationboard/to&fields[]=stationboard/stop/departureTimestamp&fields[]=stationboard/category&fields[]=stationboard/number`,
             )

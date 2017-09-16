@@ -21,7 +21,7 @@ export default connect(state => {
 })(
     class extends React.Component {
         componentDidMount() {
-            this.props.dispatch({ type: "GET_LOCATION_REQUESTED" });
+            this.props.dispatch({ type: "GET_STATIONS_REQUESTED" });
         }
         render() {
             const { stations, pending, dispatch } = this.props;
@@ -31,7 +31,7 @@ export default connect(state => {
                         <RefreshControl
                             refreshing={pending}
                             onRefresh={() => {
-                                dispatch({ type: "GET_LOCATION_REQUESTED" });
+                                dispatch({ type: "GET_STATIONS_REQUESTED" });
                             }}
                         />
                     }
