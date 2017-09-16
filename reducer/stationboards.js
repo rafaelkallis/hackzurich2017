@@ -23,11 +23,13 @@ export default (state = initState, action) => {
                             number,
                             to,
                             stop: { departureTimestamp },
+                            passList: checkpoints,
                         }) => ({
                             category,
                             number,
                             to,
                             departureTimestamp,
+                            checkpoints,
                         }),
                     ),
                     pending: false,
