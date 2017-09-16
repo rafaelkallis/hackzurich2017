@@ -70,6 +70,7 @@ const departureRowData = (setSelectedDeparture, departure) => {
                 )}
             />
         ),
+        style: styles.white,
     };
 };
 
