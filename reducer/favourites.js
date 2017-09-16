@@ -29,7 +29,6 @@ export default (state = initialState, action) => {
             };
         case "GET_FAVOURITES_FULFILLED":
             const favourites = action.payload;
-            const favouriteOb = {};
 
             return favourites.reduce(
                 (favs, favId) => ({
