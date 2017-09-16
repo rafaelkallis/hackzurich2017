@@ -3,45 +3,65 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default function({ to, category, number, departureTime }) {
     return (
-        <View style={styles.departure}>
-            <View style={styles.departureLeft}>
-                <Text>
-                    <Text style={styles.category}>{category} - </Text>
+        <View>
+            <View style={styles.row}>
+                <View style={styles.departureLeft}>
                     <Text style={styles.number}>{number}</Text>
-                </Text>
-                <Text style={styles.to}>{to}</Text>
+                </View>
+                <View style={styles.departureRight}>
+                    <Text style={styles.departureTime}>
+                        {new Date(
+                            new Date(departureTime * 1000) - new Date(),
+                        ).getMinutes()}'
+                    </Text>
+                </View>
             </View>
-            <View style={styles.departureRight}>
-                <Text style={styles.departureTime}>{departureTime}</Text>
+            <View style={styles.row}>
+                <Text style={styles.to}>{to}</Text>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    row: {
+        flex: 1,
+        flexDirection: "row",
+    },
     departure: {
         marginTop: 4,
         flex: 1,
         flexDirection: "row",
+        height: 100,
     },
     departureLeft: {
         flex: 1,
-        backgroundColor: "red",
-        alignItems: "center",
+        padding: 10,
+        alignItems: "flex-start",
     },
     departureRight: {
         flex: 1,
-        backgroundColor: "blue",
-        alignItems: "center",
+        alignItems: "flex-end",
     },
-    category: {
-        color: "green",
-    },
+    category: {},
     number: {
-        color: "green",
+        color: "white",
+        backgroundColor: "darkblue",
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 4,
+        overflow: "hidden",
+        fontSize: 20,
     },
     to: {
-        color: "yellow",
+        fontSize: 15,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
-    departureTime: {},
+    departureTime: {
+        fontSize: 30,
+        marginRight: 20,
+    },
 });
