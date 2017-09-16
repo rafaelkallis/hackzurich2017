@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   },
   category:{
     color:'green',
-    fontSize:20,
   },
   number:{
     color:'green',
