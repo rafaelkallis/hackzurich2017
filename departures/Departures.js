@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { getCloseDepartures } from "./actions";
+import Checkpoints from "../checkpoints/Checkpoints";
 
 export default connect(state => ({
     pending: state.departures.pending,
