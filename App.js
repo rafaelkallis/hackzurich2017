@@ -1,19 +1,19 @@
 import React from "react";
 import { Provider } from "react-redux";
 import Departures from "./departures/Departures";
+import { View } from "react-native";
 import store from "./store";
 import Departure from "./departure";
-
-// Testing
-import { getCloseDepartures } from "./departures/actions";
-
-store.dispatch(getCloseDepartures(47.3901869, 8.5136578)).then(console.log);
+import StatusBar from "./StatusBar";
 
 export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Departure from="Hello" />
+                <View>
+                    <StatusBar />
+                    <Departures />
+                </View>
             </Provider>
         );
     }

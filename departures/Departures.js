@@ -1,23 +1,35 @@
 import React from "react";
-import { StyleSheet, Text, ScrollView, RefreshControl } from "react-native";
+import Departure from "../departure";
+import {
+    StyleSheet,
+    Text,
+    ScrollView,
+    RefreshControl,
+    View,
+} from "react-native";
 import { connect } from "react-redux";
+import { getCloseDepartures } from "./actions";
 
-export default connect(state => ({ pending: state.pending }))(props => (
+export default connect(state => ({
+    pending: state.departures.pending,
+    departures: state.departures.data,
+}))(({ pending, departures }) => (
     <ScrollView
         refreshControl={
             <RefreshControl
-                refreshing={props.pending}
+                refreshing={pending}
                 onRefresh={() => {
-                    {
-                        /* props.dispatch(); */
-                    }
+                    props.dispatch(getCloseDepartures());
                 }}
             />
         }
     >
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        {departures.map(({ from, to, category, number, departureTime }) => (
+            <Departure
+                key={`${category}_${number}_${departureTime}`}
+                {...{ from, to, category, number, departureTime }}
+            />
+        ))}
     </ScrollView>
 ));
 
