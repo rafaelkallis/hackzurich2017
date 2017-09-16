@@ -33,10 +33,12 @@ export default () => ({ dispatch, getState }) => next => action => {
             AsyncStorage.getItem("favourites")
                 .then(favJSON => JSON.parse(favJSON))
                 .then(favourites => {
-                    dispatch({
-                        type: "GET_FAVOURITES_FULFILLED",
-                        payload: favourites,
-                    });
+                    if (favourites !== null) {
+                        dispatch({
+                            type: "GET_FAVOURITES_FULFILLED",
+                            payload: favourites,
+                        });
+                    }
                 });
             break;
     }
