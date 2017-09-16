@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default function({ to, category, number, departureTime }) {
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.row}>
                 <View style={styles.departureLeft}>
                     <Text style={styles.number}>{number}</Text>
@@ -24,6 +24,12 @@ export default function({ to, category, number, departureTime }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        borderBottomWidth: 1,
+        borderBottomColor: "grey",
+        marginBottom: 10,
+        paddingBottom: 5,
+    },
     row: {
         flex: 1,
         flexDirection: "row",
@@ -62,6 +68,7 @@ const styles = StyleSheet.create({
     },
     departureTime: {
         fontSize: 30,
+        marginTop: 15,
         marginRight: 20,
     },
 });
