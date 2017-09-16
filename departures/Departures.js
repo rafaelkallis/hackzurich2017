@@ -13,16 +13,17 @@ import { getCloseDepartures } from "./actions";
 export default connect(state => ({
     pending: state.departures.pending,
     departures: state.departures.data,
-}))(({ pending, departures }) => (
+}))(({ pending, departures, dispatch }) => (
     <ScrollView
         refreshControl={
             <RefreshControl
                 refreshing={pending}
                 onRefresh={() => {
-                    props.dispatch(getCloseDepartures());
+                    dispatch(getCloseDepartures());
                 }}
             />
         }
+        style={styles.container}
     >
         {departures.map(({ from, to, category, number, departureTime }) => (
             <Departure
@@ -35,10 +36,6 @@ export default connect(state => ({
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        marginTop: "auto",
-        // alignItems: "center",
-        // justifyContent: "center",
+        height: "100%",
     },
 });
