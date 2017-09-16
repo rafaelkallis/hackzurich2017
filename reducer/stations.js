@@ -27,7 +27,6 @@ export default (state = initState, action) => {
                     (acc, station) => ({ ...acc, [station.id]: station }),
                     {},
                 );
-            if (action.onlyAdd) console.log(action.payload);
             return {
                 ...state,
                 allStations: { ...state.allStations, ...stations },
