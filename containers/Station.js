@@ -108,28 +108,26 @@ export default connect((state, { stationId }) => {
             }
             return (
                 <View>
-                    {/*
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
-                            visible={!!this.state.selectedDeparture}
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={!!this.state.selectedDeparture}
+                    >
+                        <TouchableHighlight
+                            style={styles.modal}
+                            onPress={this.hideModal}
                         >
-                            <TouchableHighlight
-                                style={styles.modal}
-                                onPress={this.hideModal}
-                            >
-                                <View>
-                                    <Checkpoints
-                                        checkpoints={
-                                            this.state.selectedDeparture &&
-                                            this.state.selectedDeparture
-                                                .checkpoints
-                                        }
-                                    />
-                                </View>
-                            </TouchableHighlight>
-                        </Modal>
-                    */}
+                            <View>
+                                <Checkpoints
+                                    checkpoints={
+                                        this.state.selectedDeparture &&
+                                        this.state.selectedDeparture.checkpoints
+                                    }
+                                />
+                            </View>
+                        </TouchableHighlight>
+                    </Modal>
+
                     <SwipeList
                         rowData={departures.map(departure =>
                             departureRowData(
@@ -183,7 +181,6 @@ const styles = StyleSheet.create({
     },
     modal: {
         marginTop: 20,
-        backgroundColor: "blue",
         height: "100%",
     },
 });

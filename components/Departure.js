@@ -11,7 +11,7 @@ export default function({
     onPress,
 }) {
     return (
-        <View style={styles.container}>
+        <TouchableHighlight style={styles.container} onPress={onPress}>
             <View style={styles.row}>
                 {(occupation && (
                     <Icon
@@ -42,7 +42,7 @@ export default function({
                     </Text>
                 </View>
             </View>
-        </View>
+        </TouchableHighlight>
     );
 }
 
