@@ -9,7 +9,7 @@ import {
 */
 
 const initialState = {
-    departures: [
+    data: [
         /* Connection objects */
     ],
     pending: false,
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
             return Object.assign({}, state, { pending: true });
         case GET_CLOSE_DEPARTURES_FULFILLED:
             return Object.assign({}, state, {
-                departures: action.payload,
+                data: action.payload,
                 pending: false,
             });
         case GET_CLOSE_DEPARTURES_ERROR:
