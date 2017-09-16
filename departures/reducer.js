@@ -36,6 +36,7 @@ export default (state = initialState, action) => {
                 category: journey.category,
                 number: journey.category,
                 departureTime: journey.stop.departure,
+                checkpoints: journey.passList,
             }));
 
             return Object.assign({}, state, {
