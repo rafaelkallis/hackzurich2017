@@ -2,6 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import Departures from "./departures/Departures";
 import store from "./store";
+import Departure from "./departure";
 
 // Testing
 import { getCloseDepartures } from "./departures/actions";
@@ -12,7 +13,7 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Departures />
+                <Departure from="Hello" />
             </Provider>
         );
     }
