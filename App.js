@@ -8,7 +8,7 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Departure from="Hello" />
+                <Departures />
             </Provider>
         );
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, ScrollView, RefreshControl } from "react-native";
 import { connect } from "react-redux";
+import Checkpoints from "../checkpoints/Checkpoints";
 
 export default connect(state => ({ pending: state.pending }))(props => (
     <ScrollView
