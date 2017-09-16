@@ -28,8 +28,7 @@ const generateRandomParts = () => {
 };
 
 const departureRowData = (setSelectedDeparture, departure) => {
-    const occupations = generateRandomParts();
-    const { to, category, number, departureTimestamp } = departure;
+    const { to, category, number, departureTimestamp, occupations } = departure;
 
     return {
         id: `${category}_${number}_${departureTimestamp}`,
@@ -130,7 +129,7 @@ export default connect((state, { stationId }) => {
                         animationType="slide"
                         transparent={false}
                         visible={!!this.state.selectedDeparture}
-                        onRequestClose={this.hideModal}
+                        onRequestClose={() => null}
                     >
                         <View style={styles.modal}>
                             <Checkpoints
