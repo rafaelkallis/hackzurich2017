@@ -14,14 +14,14 @@ import Checkpoints from "../checkpoints/Checkpoints";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const toggleFavourite = async id => {
-    const favourites = [];
-    const isFavourite = false;
+    let favourites = [];
+    let isFavourite = false;
     const favouritesJSON = await AsyncStorage.getItem("favourites");
 
     if (favouritesJSON) favourites = JSON.parse(favouritesJSON);
 
     if (!(isFavourite = favourites.includes(id))) favourites.push(id);
-    else favourites.filter(fav => fav !== id);
+    else favourites = favourites.filter(fav => fav !== id);
 
     await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
 
@@ -60,7 +60,7 @@ const departureRowData = ({
             }}
         />
     ),
-    style: styles.row,
+    style: favourite ? styles.lightgold : styles.white,
 });
 
 export default connect(state => ({
@@ -96,15 +96,18 @@ const styles = StyleSheet.create({
     container: {
         height: "100%",
     },
-    row: {
+    white: {
         backgroundColor: "white",
+    },
+    lightgold: {
+        backgroundColor: "lightgoldenrodyellow",
     },
     rightSubView: {
         flex: -1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "steelblue",
         width: 80,
         height: "100%",
+        backgroundColor: "steelblue",
     },
 });
