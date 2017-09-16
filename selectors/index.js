@@ -1,4 +1,4 @@
-export const stationsByDistance = state =>
+export const stationsByFavouriteAndDistance = state =>
     Object.values(state.stations.data)
         .map(({ id, name, distance }) => ({
             id,
@@ -9,4 +9,5 @@ export const stationsByDistance = state =>
             isFavourite:
                 state.favourites[id] && state.favourites[id].isFavourite,
         }))
-        .sort((a, b) => parseInt(a.distance, 10) - parseInt(b.distance, 10));
+        .sort((a, b) => parseInt(a.distance, 10) - parseInt(b.distance, 10))
+        .sort((a, b) => !!b.isFavourite - !!a.isFavourite);

@@ -28,7 +28,7 @@ const generateRandomParts = () => {
 
 const departureRowData = (setSelectedDeparture, departure) => {
     const occupations = generateRandomParts();
-    const { favourite, to, category, number, departureTimestamp } = departure;
+    const { to, category, number, departureTimestamp } = departure;
 
     return {
         id: `${category}_${number}_${departureTimestamp}`,
@@ -70,7 +70,6 @@ const departureRowData = (setSelectedDeparture, departure) => {
                 )}
             />
         ),
-        style: favourite ? styles.lightgold : styles.white,
     };
 };
 

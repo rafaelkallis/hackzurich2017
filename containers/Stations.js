@@ -8,14 +8,14 @@ import {
     ActivityIndicator,
 } from "react-native";
 import { connect } from "react-redux";
-import { stationsByDistance } from "../selectors";
+import { stationsByFavouriteAndDistance } from "../selectors";
 import Station from "./Station";
 import Accordion from "react-native-collapsible/Accordion";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default connect(state => {
     return {
-        stations: stationsByDistance(state),
+        stations: stationsByFavouriteAndDistance(state),
         pending: state.stations.pending,
     };
 })(
