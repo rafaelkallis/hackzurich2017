@@ -5,7 +5,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case "TOGGLE_FAVOURITE_REQUESTED":
-            const { stationId: favStationId } = action.payload;
+            const favStationId = action.payload;
             return {
                 ...state,
                 [favStationId]: {
