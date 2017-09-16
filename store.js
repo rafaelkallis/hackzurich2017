@@ -1,9 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import departureReducer from "./departures/reducer";
 import thunk from "redux-thunk";
+import departures from "./departures/reducer";
 
 const rootReducer = combineReducers({
-    departures: departureReducer,
+    departures,
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk));

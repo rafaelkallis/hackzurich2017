@@ -19,6 +19,13 @@ const initialState = {
                 departureTime
             }
         */
+        {
+            from: "From",
+            to: "To",
+            category: "Category",
+            number: "Number",
+            departureTime: "DepartureTime",
+        },
     ],
     pending: false,
     error: null,
