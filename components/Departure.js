@@ -18,9 +18,9 @@ export default function({
                         name="warning"
                         size={20}
                         color={
-                            occupation === 3 ? (
+                            occupation === 2 ? (
                                 "red"
-                            ) : occupation === 2 ? (
+                            ) : occupation === 1 ? (
                                 "orange"
                             ) : (
                                 "white"
