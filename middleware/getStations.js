@@ -28,7 +28,7 @@ export default () => ({ dispatch, getState }) => next => action => {
             navigator.geolocation.getCurrentPosition(
                 ({ coords: { latitude, longitude } }) => {
                     fetch(
-                        `http://transport.opendata.ch/v1/locations?x=${latitude}&y=${longitude}`,
+                        `http://transport.opendata.ch/v1/locations?x=${47.390173}&y=${8.5128191}`,
                     )
                         .then(response => response.json())
                         .then(({ stations }) => {

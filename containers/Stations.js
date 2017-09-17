@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Text,
     ScrollView,
+    Image,
     RefreshControl,
     View,
     ActivityIndicator,
@@ -28,7 +29,11 @@ export default connect(state => {
             return (
                 <View>
                     <View style={styles.header}>
-                        <Text style={styles.title}>Stations</Text>
+                        <Image
+                            style={styles.logo}
+                            resizeMode="contain"
+                            source={require("../logo.png")}
+                        />
                     </View>
                     <ScrollView
                         refreshControl={
@@ -95,7 +100,11 @@ const styles = StyleSheet.create({
         paddingTop: 16,
         paddingLeft: 12,
         paddingBottom: 16,
-        backgroundColor: "#42a5f5",
+        backgroundColor: "#FAEBD7",
+    },
+    logo: {
+        height: 30,
+        width: "100%",
     },
     title: {
         fontSize: 20,

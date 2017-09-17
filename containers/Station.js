@@ -57,7 +57,7 @@ const departureRowData = (setSelectedDeparture, departure) => {
                             <View key={idx} style={partStyles}>
                                 <View style={styles.partClass}>
                                     <Text style={styles.partNumber}>
-                                        {Math.round(Math.random())}
+                                        {Math.round(Math.random()) + 1}
                                     </Text>
                                 </View>
                             </View>
